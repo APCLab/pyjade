@@ -30,7 +30,7 @@ class Compiler(_Compiler):
     def visitMixin(self,mixin):
         self.mixing += 1
         if not mixin.call:
-          self.buffer('{%% __pyjade_kwacro %s %s %%}'%(mixin.name,mixin.args)) 
+          self.buffer('{%% __pyjade_kwacro %s %s %%}'%(mixin.name,mixin.args))
           self.visitBlock(mixin.block)
           self.buffer('{% end__pyjade_kwacro %}')
         elif mixin.block:
@@ -71,7 +71,7 @@ except ImportError:
     # TEMPLATES['OPTIONS']['builtins'] = ['pyjade.ext.django.templatetags']
     pass
 
-from django.utils.translation import trans_real
+from django.utils import translation
 
 try:
     from django.utils.encoding import force_text as to_text
@@ -89,7 +89,7 @@ def decorate_templatize(func):
 
     return templatize
 
-trans_real.templatize = decorate_templatize(trans_real.templatize)
+translation.templatize = decorate_templatize(translation.templatize)
 
 try:
     from django.contrib.markup.templatetags.markup import markdown
@@ -97,7 +97,7 @@ try:
     @register_filter('markdown')
     def markdown_filter(x,y):
         return markdown(x)
-        
+
 except ImportError:
     pass
 
